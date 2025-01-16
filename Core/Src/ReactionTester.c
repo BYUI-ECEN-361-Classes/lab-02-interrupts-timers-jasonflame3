@@ -68,9 +68,13 @@ void got_start()
 
 	  /**************** STUDENT TO FILL IN START HERE ********************/
 		// Step 1
+		MultiFunctionShield_Single_Digit_Display(5,0);
 		// Step 2
+		HAL_Delay(rand_millisec);
 		// Step 3
+		MultiFunctionShield_Display(8888);
 		// Step 4
+		HAL_TIM_Base_Start_IT(&htim3);
 	  /**************** STUDENT TO FILL IN END  HERE ********************/
 	}
 void got_stop()
@@ -86,12 +90,19 @@ void got_stop()
 
 	  /**************** STUDENT TO FILL IN START HERE ********************/
       // 1.) Stop the random timer // Random timer is timer3
-
+		HAL_TIM_Base_Stop_IT(&htim3);
       // 2.) Read the value of the timer -- this step provided
-		last_reaction_time_in_millisec = __HAL_TIM_GetCounter(&htim3) / 10; // Why is it divide by 10?
+		// had to include this to fix a bug that record a stop press before the "GO" as a time of 0
+		//checks if the time is positive and not zero and records if valid. records 9999 if not valid.
+		if(__HAL_TIM_GetCounter(&htim3) / 10 > 0){
+			last_reaction_time_in_millisec = __HAL_TIM_GetCounter(&htim3) / 10; // Why is it divide by 10?
+		}
+		else{
+			last_reaction_time_in_millisec = 9999;
+		}
 
 	  // 3.) Display the value
-
+		MultiFunctionShield_Display(last_reaction_time_in_millisec);
 
       /**************** STUDENT TO FILL IN END HERE ********************/
 		// Keep the best time in a global variable

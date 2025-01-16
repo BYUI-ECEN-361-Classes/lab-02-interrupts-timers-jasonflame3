@@ -75,9 +75,13 @@ Note the speed of D1/D2/D3 - they should seem like a 3-bit binary counter.
 
 Once you have all three LEDs blinking properly, answer the following questions:
 
-1. At what frequency does D1 toggle? [*answer here*]
+1. At what frequency does D1 toggle? 
 
-2. Do all LEDs toggle at *exactly* the same time? [*answer here*]
+   1 HZ
+
+2. Do all LEDs toggle at *exactly* the same time? 
+
+   No, because the CPU can only servicce one interupt at a time. 
 
 ## Part 2: Changing the clock tree
 
@@ -92,11 +96,17 @@ Change the clock tree to adjust the rates at which the LEDs blink.
 
 ## Part 2 Questions (3 pts)
 
-1. What has happened to the speed of the timers? [*answer here*]
+1. What has happened to the speed of the timers?
 
-2. What is the new frequency of LED D1? [*answer here*]
+   They got 8 times slower
 
-3. When we changed the frequency, did the Seven-Segment Light update rate change?  (hint, look at the clocks driving the APB1, APB2 buses and which timers are on which bus.  Recall that the Seven-Segment timer is Tim17) [*answer here*]
+2. What is the new frequency of LED D1?
+
+   0.125 Hz or toggles every 8 seconds
+
+3. When we changed the frequency, did the Seven-Segment Light update rate change?  (hint, look at the clocks driving the APB1, APB2 buses and which timers are on which bus.  Recall that the Seven-Segment timer is Tim17) 
+
+   Yes the update rate changed. the seven segment display is on timer 17 which is connected to the APB2 Prescaler.
 
 ## Part 3: Reaction Timer (5 pts)
 
@@ -139,4 +149,6 @@ For Seven Segment Display Functions, check the MultiFunctionShield.h header file
 
 * Currently, the reaction tester can have a wait time anywhere between 0 and 7000 milliseconds, Implement a minimum wait time in such a way that doesn't change the potential maximum wait time
 
-If you do any of these items - just mention what and how it worked, [*here*].
+If you do any of these items - just mention what and how it worked.
+
+I created a penalty for cheating, by checking that the timer is greater than zero before updating the last_reaction_time_in_millisec variable. If the player did cheat, their score was recorded as 9999. 
